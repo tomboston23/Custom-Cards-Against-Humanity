@@ -1,0 +1,367 @@
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+html, body {
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+  width: 100vw; /* Ensures the page width doesn't exceed the viewport */
+}
+
+#GAME {
+  overflow-y: hidden; /* Prevent full page scrolling */
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+
+#startScreen {
+  margin-top: 50px;
+}
+
+#nicknameInput {
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#cuhdeyboahd {
+  position: absolute;
+  left: 0px;
+  top: 65px;
+}
+
+#czarblock {
+  position: absolute;
+  left:350px;
+  top: 290px;
+}
+
+#czarblock li {
+  width: 838px;
+  height: 325px;
+  color: black;
+  background: rgba(80,80,80,0.3);
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  font-weight: normal;
+  text-align: center;
+  border-radius: 4px;
+  padding: 10px;
+  display: flex;
+}
+
+#cuhdeyboahd li {
+  border: 1px solid #FFFFFF;
+  padding: 10px;
+  margin: 5px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: top;
+  justify-content: left;
+  font-size: 1em;
+  font-weight: normal;
+  text-align: left;
+  background-color: #000000;
+  color:#FFFFFF;
+  border-radius: 3px; /* Rounded corners */
+}
+
+#confirmButton {
+  position:absolute;
+  width: 160px;
+  height: 20px;
+  top:260px;
+  left:45px;
+  align-items: center;
+  font-size: 0.9em;
+  display: flex;
+}
+
+#queryInput {
+  padding: 15px;
+  font-size: 16px;
+  width: 80%; /* Makes it wider */
+  height: 70px; /* Increases height */
+  font-family: sans-serif;
+  max-width: 600px; /* Limits max width */
+  display: block; /* Ensures it takes full width and is on a new line */
+  margin: 10px auto; /* Centers the input */
+}
+
+#submitQuery {
+  display: block; /* Puts button on a new line */
+  margin: 10px auto; /* Centers it below the input */
+  padding: 12px 25px;
+  font-size: 18px;
+}
+
+/* Container to align questions and answers side by side */
+#question, #answers, #playersList {
+  display: flex; /* Enables flexbox */
+  flex-wrap: wrap; /* Allows wrapping if there are too many cards */
+  gap: 10px; /* Adds space between cards */
+}
+
+#myAnswers{
+  position: fixed;
+  display: flex; /* Enables flexbox */
+  flex-wrap: wrap; /* Allows wrapping if there are too many cards */
+  gap: 0px; /* Adds space between cards */
+  left: 350px;
+  top: 290px;
+}
+
+#playersList li {
+  background: white;
+  border: 1px solid #000000;
+  padding: 10px;
+  margin: 5px;
+  width: 100px;
+  height: 20px;
+  display: flex;
+  align-items: top;
+  justify-content: left;
+  font-size: 1em;
+  font-weight: normal;
+  text-align: left;
+  border-radius: 2px; /* Rounded corners */
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#answers li{
+  background: white;
+  border: 1px solid #000000;
+  padding: 10px;
+  margin: 5px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: top;
+  justify-content: left;
+  font-size: 1em;
+  font-weight: normal;
+  text-align: left;
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+#myAnswers li {
+  border: 1px solid #000000;
+  padding: 10px;
+  margin: 5px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: top;
+  justify-content: left;
+  font-size: 1em;
+  font-weight: normal;
+  text-align: left;
+  border-radius: 3px; /* Rounded corners */
+}
+
+#question li {
+  background: black;
+  border: 1px solid #000000;
+  padding: 10px;
+  margin: 5px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: top;
+  justify-content: left;
+  font-size: 1em;
+  font-weight: normal;
+  text-align: left;
+  color: white;
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+#playersList2 {
+  position: fixed;
+  top: 320px; /* Positions at the bottom */
+  left: 0px; /* Adjusts from the left */
+  display: flex;
+  flex-direction: column;
+  gap: 0px; /* Adds space between players */
+}
+
+#playersList2 li {
+  position: relative;
+  background: white; /* Optional: Make it stand out */
+  color: black;
+  padding: 10px;
+  border: 1px solid #000000;
+  width: 220px;
+  height: 15px;
+  text-align: left;
+  list-style: none; /* Removes bullet points */
+  border-radius: 1px;
+}
+
+#scorelist {
+  position: fixed;
+  top:320px; /* Positions at the bottom */
+  left: 190px; /* Adjusts from the left */
+  display: flex;
+  flex-direction: column;
+  gap: 1px; /* Adds space between players */
+}
+
+#scorelist li {
+  position: relative;
+  background: rgba(255, 255, 255, 0); /* Optional: Make it stand out */
+  border: 1px rgba(255, 255, 255, 0);
+  color: black;
+  padding: 10px;
+  width: 40px;
+  height: 15px;
+  text-align: center;
+  list-style: none; /* Removes bullet points */
+  border-radius: 1px;
+}
+
+#statuslist {
+  position: fixed;
+  top: 320px; /* Positions at the bottom */
+  left: 240px; /* Adjusts from the left */
+  display: flex;
+  flex-direction: column;
+  gap: 1px; /* Adds space between players */
+}
+
+#statuslist li {
+  position: relative;
+  background: rgba(255, 255, 255, 0); /* Optional: Make it stand out */
+  border: 1px rgba(255, 255, 255, 0);
+  color: black;
+  padding: 10px;
+  width: 100px;
+  height: 15px;
+  text-align: left;
+  list-style: none; /* Removes bullet points */
+  border-radius: 1px;
+  font-style: italic;
+}
+
+.scoreboard {
+  position: absolute;
+  top: 290px;
+  left: 0;
+  width: auto; /* Adjusts width to content */
+  min-width: 200px; /* Optional: Ensures it's visible */
+}
+
+.full-width-line {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: 1px; /* Adjust thickness */
+  background-color: black; /* Change color */
+  border: none; /* Remove default border */
+  top: 300px;
+}
+
+.selectheader{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  text-align: left;
+  width: auto; /* Adjusts width to content */
+  min-width: 200px; /* Optional: Ensures it's visible */
+}
+
+#answerboard {
+  display: flex;
+  position: relative;
+  top: 10px;
+  left: 200px;
+  gap: 0px;
+  align-items: flex-start;
+  list-style: none; /* Remove bullets */
+  padding: 5px;
+  margin: 5px;
+  flex-wrap: nowrap;  /* Prevents wrapping */
+}
+
+  /* Base styles for the cards */
+.selectable {
+  background-color: white;
+  color: black;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  list-style-type: none; /* Removes the default list item markers */
+}
+
+.selectable2 {
+  background-color: white;
+  color: black;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  list-style-type: none; /* Removes the default list item markers */
+}
+
+#answerboard li {
+  border: 1px solid #000000;
+  padding: 10px;
+  margin: 5px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: top;
+  justify-content: left;
+  font-size: 1em;
+  font-weight: normal;
+  text-align: left;
+  border-radius: 3px; /* Rounded corners */
+}
+
+.selected2 {
+  background-color: lightblue;
+  color: white;
+  border-color: black;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  list-style-type: none; /* Removes the default list item markers */
+}
+
+/* Highlight selected card */
+.selected {
+  background-color: lightblue;
+  color: white;
+  border-color: black;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  list-style-type: none; /* Removes the default list item markers */
+}
+
+.played::before {
+  content: "";
+}

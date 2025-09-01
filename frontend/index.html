@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Start Screen -->
+  <div id="startScreen">
+    <h2>Enter Your Nickname</h2>
+    <input type="text" id="nicknameInput" placeholder="Your nickname">
+    <button id="startButton">Start Game</button>
+  </div>
+
+  <!-- Game Screen (Initially Hidden) -->
+  <div id="gameScreen" style="display: none;">
+    <h2>Players:</h2>
+    <!-- Player's name will be shown here, and they have a single "Ready" button -->
+    <div id="playerStatus">
+      <button id="readyButton">Ready</button>
+    </div>
+    <ul id="playersList"></ul> <!-- List of players -->
+
+    <h2>Enter Cards</h2>
+    <textarea id="queryInput"></textarea>
+    <select id="entryType">
+      <option value="0">Question</option>
+      <option value="1">Answer</option>
+    </select>
+    <button id="submitQuery">Submit</button>
+    <h2>Questions</h2>
+    <ul id="question"></ul>
+    <button id="displayQuestions">Show Questions</button>
+    <h2>Answers</h2>
+    <ul id="answers"></ul>
+    <button id="displayAnswers">Show Answers</button>
+  </div>
+
+  <div id="GAME" style="display: none;">
+    <div class="playerstatus">
+      <h3 id="selectheader"></h3>
+    </div>
+    <div id="confirmed">
+      <button id="confirmButton">Confirm Selection</button>
+    </div>
+    <div class="scoreboard">
+      <h3>Scoreboard</h3>
+    </div>
+    <ul id="cuhdeyboahd"></ul>
+    <ul id="answerboard"></ul>
+    <ul id="myAnswers">
+    </ul>
+    <ul id="playersList2"></ul> <!-- List of players -->
+    <ul id="scorelist"></ul>
+    <ul id="statuslist"></ul>
+    <ul id="czarblock"></ul>
+    <div class="full-width-line"></div>
+  </div>
+
+  <div id="blank" style="display: none;">
+    <h1>Game Already Started!</h1>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
