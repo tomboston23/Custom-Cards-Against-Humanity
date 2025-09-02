@@ -4,14 +4,43 @@ body {
   text-align: center;
 }
 
-html, body {
-  overflow-x: hidden; /* Prevents horizontal scrolling */
-  width: 100vw; /* Ensures the page width doesn't exceed the viewport */
+
+/* match the element's id, not a class */
+#selectheader {
+  position: fixed;   /* sticks within .left-column, not the window */
+  top: 0;
+  z-index: 2;
+  background: #fff;   /* so it doesn’t blend with content under it */
 }
 
+#gameScreen {
+  overflow-y: auto;
+}
+
+
+
 #GAME {
-  overflow-y: hidden; /* Prevent full page scrolling */
-  overflow-x: hidden; /* Prevents horizontal scrolling */
+  overflow-y: hidden;
+  display: flex;
+  gap: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden; /* scroll horizontally if too wide */
+  max-width: 100vw;
+
+}
+
+/* Answer board at the top */
+#answerboard {
+  flex: 1;
+  padding: 10px;
+  z-index: 0;
+  overflow-y: hidden;
+  max-width: 100%;   /* never grow wider than parent */
+  width: 100%;       /* explicitly match container */
+  overflow-x: hidden;
+  display: inline-block;   /* instead of flex item */
+  min-width: 0;            /* allow shrinking */
+  white-space: nowrap;     /* still lays out children in one row */
 }
 
 
@@ -31,20 +60,21 @@ button {
 }
 
 #cuhdeyboahd {
-  position: absolute;
+  z-index: 20;
+  position: fixed;
   left: 0px;
   top: 65px;
 }
 
 #czarblock {
-  position: absolute;
-  left:350px;
+  position: fixed;
+  left:351px;
   top: 290px;
 }
 
 #czarblock li {
-  width: 838px;
-  height: 325px;
+  width: 805px;
+  height: 310px;
   color: black;
   background: rgba(80,80,80,0.3);
   list-style: none;
@@ -57,6 +87,47 @@ button {
   padding: 10px;
   display: flex;
 }
+
+/* use a CSS variable for easy tuning */
+:root { --gap: 15px; }
+
+#myAnswers {
+  position: fixed;
+  left: 390px;
+  top: 290px;
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: var(--gap);           /* consistent horizontal + vertical spacing */
+  align-content: flex-start; /* DON'T stretch rows vertically */
+  align-items: flex-start;   /* items align to top of each row */
+  justify-content: flex-start;
+
+  box-sizing: border-box;
+  padding: 8px;              /* optional inner padding */
+
+  /* optional constraints so the container doesn't become huge */
+  max-width: calc(5 * 150px + 6 * 12px + 10px); /* 5 cards + 4 gaps */
+  max-height: none;  
+}
+
+#myAnswers li {
+  box-sizing: border-box;   /* include padding/border in width/height */
+  margin: 0;                /* remove margin; gap handles spacing */
+  width: 150px;
+  height: 150px;
+
+  padding: 10px;            /* internal padding */
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  overflow: hidden;         /* prevent content from changing height */
+  text-overflow: ellipsis;  /* optional truncation */
+  white-space: normal;      /* allow wrapping inside card if needed */
+}
+
+
 
 #cuhdeyboahd li {
   border: 1px solid #FFFFFF;
@@ -76,7 +147,7 @@ button {
 }
 
 #confirmButton {
-  position:absolute;
+  position:fixed;
   width: 160px;
   height: 20px;
   top:260px;
@@ -84,6 +155,7 @@ button {
   align-items: center;
   font-size: 0.9em;
   display: flex;
+  z-index: 10;
 }
 
 #queryInput {
@@ -111,14 +183,7 @@ button {
   gap: 10px; /* Adds space between cards */
 }
 
-#myAnswers{
-  position: fixed;
-  display: flex; /* Enables flexbox */
-  flex-wrap: wrap; /* Allows wrapping if there are too many cards */
-  gap: 0px; /* Adds space between cards */
-  left: 350px;
-  top: 290px;
-}
+
 
 #playersList li {
   background: white;
@@ -154,21 +219,6 @@ button {
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-#myAnswers li {
-  border: 1px solid #000000;
-  padding: 10px;
-  margin: 5px;
-  width: 140px;
-  height: 140px;
-  display: flex;
-  align-items: top;
-  justify-content: left;
-  font-size: 1em;
-  font-weight: normal;
-  text-align: left;
-  border-radius: 3px; /* Rounded corners */
-}
-
 #question li {
   background: black;
   border: 1px solid #000000;
@@ -197,7 +247,7 @@ button {
 
 #playersList2 li {
   position: relative;
-  background: white; /* Optional: Make it stand out */
+  background: white;
   color: black;
   padding: 10px;
   border: 1px solid #000000;
@@ -219,7 +269,7 @@ button {
 
 #scorelist li {
   position: relative;
-  background: rgba(255, 255, 255, 0); /* Optional: Make it stand out */
+  background: rgba(255, 255, 255, 0);
   border: 1px rgba(255, 255, 255, 0);
   color: black;
   padding: 10px;
@@ -254,7 +304,7 @@ button {
 }
 
 .scoreboard {
-  position: absolute;
+  position: fixed;
   top: 290px;
   left: 0;
   width: auto; /* Adjusts width to content */
@@ -262,22 +312,23 @@ button {
 }
 
 .full-width-line {
-  position: absolute;
+  position: fixed;
   left: 0px;
   width: 100%;
   height: 1px; /* Adjust thickness */
   background-color: black; /* Change color */
   border: none; /* Remove default border */
-  top: 300px;
+  top: 290px;
 }
 
 .selectheader{
-  position: absolute;
+  position: sticky;
   top: 0px;
   left: 0px;
   text-align: left;
   width: auto; /* Adjusts width to content */
   min-width: 200px; /* Optional: Ensures it's visible */
+  overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
 #answerboard {
@@ -333,6 +384,7 @@ button {
   font-weight: normal;
   text-align: left;
   border-radius: 3px; /* Rounded corners */
+  z-index: 0;
 }
 
 .selected2 {

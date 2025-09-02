@@ -3,15 +3,17 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import os
 
-# You'll need to replace these with your actual credentials
-# The best practice is to store your credentials in an environment variable 
-# and read it from there as done below, not in the code directly.
+# Similar to entry.py, this code only works if you have the right credentials.
+# Since I am the only user with the credentials, I am the only one who can run this script.
+# This script is used for deleting cards and players from the Firestore database.
+# This is the only way to delete cards and players from the database.
+    # players can be deleted from the web interface when they close the browser but it doesn't always work
+
 cred = credentials.Certificate(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"))
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def main():
-    # No need to create a table; Firestore is schemaless
     print("Type \"dq\" to delete all questions")
     print("Type \"da\" to delete all answers")
     print("Type \"dall\" to delete all cards")

@@ -1,3 +1,20 @@
+// This script is the main bulk of the frontend code.
+// This is my first experience with any kind of frontend development
+// so please forgive any bad practices or mistakes.
+// This was built using pure HTML, CSS, and JavaScript
+
+// As it's my first time using HTML and CSS, I have no knowledge on how to 
+  // make things look pretty or work well on mobile devices or different screen sizes.
+
+// This is also my first time using Firebase and Firestore
+// So some of my implementation may not be optimal or secure.
+// I am open to any suggestions or improvements.
+
+// Additionally, when I commit this to git, it will not be usable because it won't
+  // have the right credentials or firebase access. I am the only one with the credentials.
+  // However the code remains usable through the URL: https://cards-d9c93.web.app/
+
+
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 import { runTransaction, getFirestore, collection, onSnapshot, getDocs, addDoc, doc, setDoc, getDoc, deleteDoc, updateDoc  } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
@@ -22,7 +39,6 @@ var round_going = false;
 var played = false;
 var myName = "";
 let myanswers = [];
-let i_played = false;
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -387,133 +403,6 @@ document.getElementById("displayAnswers").addEventListener("click", async () => 
   document.getElementById("displayAnswers").style.display = 'none';
 });
 
-// Handle nickname submission
-// Handle "Start Game" button click
-document.getElementById("startButton").addEventListener("click", async () => {
-  const playerName = document.getElementById("nicknameInput").value;
-  
-  if (!playerName.trim()) {
-      alert("Please enter a nickname to start the game.");
-      return;
-  }
-
-  myName = playerName;
-
-  try {
-      // Add the player to Firestore
-      const playerRef = doc(collection(db, "players"), playerName); // Using name as the unique player ID
-      addPlayer(playerName);
-
-      console.log("Player added to Firestore:", playerName);
-
-      // Proceed with game setup (e.g., show the game screen)
-      document.getElementById("startScreen").style.display = "none"; // Hide start screen
-      document.getElementById("GAME").style.display = "none";
-      document.getElementById("gameScreen").style.display = "block"; // Show game screen
-      const snapshot = await getDocs(playersCollection);  // Fetch data once when clicked
-  } catch (error) {
-      console.error("Error starting game: ", error);
-  }
-});
-
-
-// Listen for player updates in real-time
-// Listen for players and create their name boxes with a "Ready" button
-// Assuming you have a way to identify the current player, 
-// you can get their information (e.g., playerName) from sessionStorage, Firestore, etc.
-
-document.getElementById("readyButton").addEventListener("click", async () => {
-  if (!myName) {
-    console.log("Player name not found!");
-    return;
-  }
-
-  try {
-    // Get the player document to check its current state
-    const playerRef = doc(db, "players", myName);
-    const playerSnapshot = await getDoc(playerRef);
-
-    if (!playerSnapshot.exists()) {
-      console.log("Player not found in Firestore.");
-      return;
-    }
-
-    // Check the current status before updating
-    const playerData = playerSnapshot.data();
-    const currentStatus = playerData.status;
-
-    // If already ready, show a message and stop further actions
-    if (currentStatus === "ready") {
-      console.log("You are already ready!");
-      return;
-    }
-
-    // Update the player's status to "ready" in Firestore
-    await setDoc(playerRef, { status: "ready" }, { merge: true });
-
-    console.log(`${myName} is now ready!`);
-
-    const readyButton = document.getElementById("readyButton");
-    readyButton.innerText = "Waiting for others...";
-    readyButton.style.opacity = 0.5;  // Make the button fade
-    readyButton.disabled = true;  // Optionally, disable the button
-
-    // Update the UI (like showing the green box)
-    const snapshot = await getDocs(playersCollection);  // Fetch all players once again to update
-    show_players(snapshot);  // Call the function to update the UI with the new status
-
-  } catch (error) {
-    console.error("Error updating player status: ", error);
-  }
-});
-
-setTimeout(() => {
-  console.log("This runs after 3 seconds");
-}, 6000); // 3000 milliseconds = 3 seconds
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-document.getElementById("confirmButton").addEventListener("click", async () => {
-  played = true;
-  const confirmButton = document.getElementById("confirmButton");
-  confirmButton.innerText = "Confirm Selection";
-  confirmButton.style.opacity = 0.5;  // Make the button fade
-  confirmButton.disabled = true;  // Optionally, disable the button
-  let q = "";
-  
-  if(myidx != myczar){
-    const answer = document.getElementById("myAnswers");
-    document.querySelectorAll(".selected").forEach(item => {
-      q = item.textContent;
-      answer.removeChild(item);
-      console.log(`card containing question ${q} removed`);
-    });
-    setAnswer(myidx, q + myidx);
-    const topheader = document.getElementById("selectheader");
-    topheader.textContent = "Waiting for players...";
-  } else {
-    console.log("czar has confirmed an answer");
-    const selectedItems = document.querySelectorAll(".selected2");
-
-    for (const item of selectedItems) {  // Using for...of instead of forEach
-      console.log(`answer id: ${item.id}`);
-      let num = Number((item.id).slice(8)); // Extracts substring from index 8
-      console.log(`num selected: ${num}`);
-      setBestAnswer(num);
-      let nextczar = (myczar + 1) % num_p;
-      setGlobalVariable("who", nextczar);
-      round_going = true;
-    }
-
-  }
-});
-
-
-
-
-
 
 // Listen for player updates in real-time and update UI
 onSnapshot(playersCollection, (snapshot) => {
@@ -594,6 +483,138 @@ async function addPlayer(name) {
   }
 }
 
+// Handle nickname submission
+// Handle "Start Game" button click
+document.getElementById("startButton").addEventListener("click", async () => {
+  const playerName = document.getElementById("nicknameInput").value;
+  
+  if (!playerName.trim()) {
+      alert("Please enter a nickname to start the game.");
+      return;
+  }
+
+  myName = playerName;
+
+  try {
+      // Add the player to Firestore
+      // const playerRef = doc(collection(db, "players"), playerName); // Using name as the unique player ID
+      addPlayer(playerName);
+
+      console.log("Player added to Firestore:", playerName);
+
+      // Proceed with game setup (e.g., show the game screen)
+      document.getElementById("startScreen").style.display = "none"; // Hide start screen
+      document.getElementById("GAME").style.display = "none";
+      document.getElementById("gameScreen").style.display = "block"; // Show game screen
+      // const snapshot = await getDocs(playersCollection);  // Fetch data once when clicked
+  } catch (error) {
+      console.error("Error starting game: ", error);
+  }
+});
+
+
+// Listen for player updates in real-time
+// Listen for players and create their name boxes with a "Ready" button
+// Assuming you have a way to identify the current player, 
+// you can get their information (e.g., playerName) from sessionStorage, Firestore, etc.
+
+document.getElementById("readyButton").addEventListener("click", async () => {
+  if (!myName) {
+    console.log("Player name not found!");
+    return;
+  }
+
+  try {
+    // Get the player document to check its current state
+    const playerRef = doc(db, "players", myName);
+    const playerSnapshot = await getDoc(playerRef);
+
+    if (!playerSnapshot.exists()) {
+      console.log("Player not found in Firestore.");
+      return;
+    }
+
+    // Check the current status before updating
+    const playerData = playerSnapshot.data();
+    const currentStatus = playerData.status;
+
+    // If already ready, show a message and stop further actions
+    if (currentStatus === "ready") {
+      console.log("You are already ready!");
+      return;
+    }
+
+    // Update the player's status to "ready" in Firestore
+    await setDoc(playerRef, { status: "ready" }, { merge: true });
+
+    console.log(`${myName} is now ready!`);
+
+    const readyButton = document.getElementById("readyButton");
+    readyButton.innerText = "Waiting for others...";
+    readyButton.style.opacity = 0.5;  // Make the button fade
+    readyButton.disabled = true;  // Optionally, disable the button
+
+    // Update the UI (like showing the green box)
+    const snapshot = await getDocs(playersCollection);  // Fetch all players once again to update
+    show_players(snapshot);  // Call the function to update the UI with the new status
+
+  } catch (error) {
+    console.error("Error updating player status: ", error);
+  }
+});
+
+setTimeout(() => {
+  console.log("This runs after 3 seconds");
+}, 6000); // 3000 milliseconds = 3 seconds
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+document.getElementById("confirmButton").addEventListener("click", async () => {
+  //this deals with the player confirming their answer
+  // or czar confirming the winning answer
+  played = true;
+  const confirmButton = document.getElementById("confirmButton");
+  confirmButton.innerText = "Confirm Selection";
+  confirmButton.style.opacity = 0.5;  // Make the button fade
+  confirmButton.disabled = true;  // disable the button
+  console.log("confirm button disabled");
+  let q = "";
+  
+  if(myidx != myczar){
+    const answer = document.getElementById("myAnswers");
+    document.querySelectorAll(".selected").forEach(item => {
+      q = item.textContent;
+      answer.removeChild(item);
+      console.log(`card containing question ${q} removed`);
+    });
+    setAnswer(myidx, q + myidx);
+    const topheader = document.getElementById("selectheader");
+    topheader.textContent = "Waiting for players...";
+  } else {
+    console.log("czar has confirmed an answer");
+    const selectedItems = document.querySelectorAll(".selected2");
+
+    for (const item of selectedItems) {  // Using for...of instead of forEach
+      console.log(`answer id: ${item.id}`);
+      let num = Number((item.id).slice(8)); // Extracts substring from index 8
+      console.log(`num selected: ${num}`);
+      setBestAnswer(num);
+      let nextczar = (myczar + 1) % num_p;
+      setGlobalVariable("who", nextczar);
+      round_going = true;
+    }
+
+  }
+});
+
+
+
+
+
+
+
 let players = [];
 let scores = [];
 let questions_list = [];
@@ -673,6 +694,7 @@ async function start_game(snapshot){
     confirmButton.innerText = "Confirm Selection";
     confirmButton.style.opacity = 0.5;  // Make the button fade
     confirmButton.disabled = true;  // Optionally, disable the button
+    console.log("confirm button disabled");
   });
 
   querySnapshot.forEach((doc) => {
@@ -730,8 +752,9 @@ function display_my_answers(){
       document.querySelectorAll(".selectable").forEach(el => el.classList.remove("selected"));
       const confirmButton = document.getElementById("confirmButton");
       confirmButton.innerText = "Confirm Selection";
-      confirmButton.style.opacity = 1;  // Make the button fade
-      confirmButton.disabled = false;  // Optionally, disable the button
+      confirmButton.style.opacity = 1;  // Make the button visible
+      confirmButton.disabled = false;  // enable confirm button
+      console.log("confirm button enabled");
       
       // Add 'selected' class to the clicked item
       this.classList.add("selected");
@@ -756,8 +779,9 @@ function get_new_answer(){
     document.querySelectorAll(".selectable").forEach(el => el.classList.remove("selected"));
     const confirmButton = document.getElementById("confirmButton");
     confirmButton.innerText = "Confirm Selection";
-    confirmButton.style.opacity = 1;  // Make the button fade
-    confirmButton.disabled = false;  // Optionally, disable the button
+    confirmButton.style.opacity = 1;  // Make the button appear
+    confirmButton.disabled = false;  // enable the button
+    console.log("confirm button enabled");
     
     // Add 'selected' class to the clicked item
     this.classList.add("selected");
@@ -769,7 +793,6 @@ function get_new_answer(){
 // }
 
 async function start_czar() {
-  i_played = false;
   round_going = false;
   console.log("czar actions starting");
   display_board_answers();
@@ -859,8 +882,9 @@ async function display_board_answers(){
       document.querySelectorAll(".selectable2").forEach(el => el.classList.remove("selected2"));
       const confirmButton = document.getElementById("confirmButton");
       confirmButton.innerText = "Confirm Selection";
-      confirmButton.style.opacity = 1;  // Make the button fade
-      confirmButton.disabled = false;  // Optionally, disable the button
+      confirmButton.style.opacity = 1;  // Make the button appear
+      confirmButton.disabled = false;  // enable the button
+      console.log("confirm button enabled");
       
       // Add 'selected' class to the clicked item
       this.classList.add("selected2");
